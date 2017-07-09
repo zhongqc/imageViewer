@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>imageViewer</title>
+	<link rel="stylesheet" href="imageViewer-0.1.css">
+</head>
+<body>
+	<script src="jquery-3.2.1.min.js"></script>
+	<script src="imageViewer-0.1.js"></script>
+	<script>
+		var params = {
+			"imgsArr": ["http://imgsrc.baidu.com/image/c0%3Dshijue%2C0%2C0%2C245%2C40/sign=045d1d4ef9deb48fef64a99d9876505c/a9d3fd1f4134970ac9e997009fcad1c8a7865d03.jpg", "http://imgsrc.baidu.com/image/c0%3Dshijue%2C0%2C0%2C245%2C40/sign=9f058521ab8b87d6444fa35c6f61424d/54fbb2fb43166d22635322844c2309f79052d2fd.jpg"]
+		};
+		var imgViewer = new imgViewer(params);
+		imgViewer.init();
+	</script>
+</body>
+</html>
