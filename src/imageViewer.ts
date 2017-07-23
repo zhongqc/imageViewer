@@ -6,7 +6,11 @@ class imageViewer {
     minScale: number;
     maxScale: number;
     showIndex: number;
-    imageShowCell: Element;
+    imageShowCell: HTMLElement;
+
+    private startPoints: TouchList;
+
+    private matrix: {X: number, Y: number, scale: number};
 
     constructor(images: Array<string>, minScale: number = 1, maxScale: number = 3, showIndex: number = 0) {
         this.images = images;
@@ -37,7 +41,9 @@ class imageViewer {
 
     showIndexImage() {
         this.showIndex = this.showIndex % this.images.length;
+        //上次显示的cell
         let lastImageShowCell = document.getElementById("imageViewer").getElementsByClassName("imageShow")[0];
+        //移除显示cell的imageShow class
         if (lastImageShowCell != null) {
             let classNameArr = lastImageShowCell.className.split(' ');
             for (let i: number = 0; i < classNameArr.length; i++) {
@@ -48,7 +54,7 @@ class imageViewer {
             }
             lastImageShowCell.className = classNameArr.join(" ");
         }
-        this.imageShowCell = document.getElementById("imageViewer").getElementsByClassName("imgCell")[this.showIndex];
+        this.imageShowCell = <HTMLElement>document.getElementById("imageViewer").getElementsByClassName("imgCell")[this.showIndex];
         this.imageShowCell.className += " imageShow";
         this.bindTouchEvent();
     }
@@ -63,7 +69,7 @@ class imageViewer {
 
     imageShowTouchStart(e: TouchEvent) {
         if (e.touches.length >= 2) {
-            let startPoints = e.touches;
+            this.startPoints = e.touches;
             document.getElementById("imageViewer").getElementsByClassName("imageShow")[0].removeEventListener("touchmove", this.imageShowTouchMove, false);
             document.getElementById("imageViewer").getElementsByClassName("imageShow")[0].addEventListener("touchmove", this.imageShowTouchScale, false);
             document.getElementById("imageViewer").getElementsByClassName("imageShow")[0].addEventListener("touchend", this.imageShowTouchEnd, false);
@@ -74,7 +80,9 @@ class imageViewer {
 
     imageShowTouchScale(e: TouchEvent) {
         let nowPoints = e.touches;
-        console.log(nowPoints);
+        // console.log(nowPoints);
+        this.showScaleImg(imageViewer.getMovingScale(this.startPoints, nowPoints));
+
     }
 
     imageShowTouchMove(e: TouchEvent) {
@@ -83,5 +91,33 @@ class imageViewer {
 
     imageShowTouchEnd(e: TouchEvent) {
 
+    }
+
+    private static getMovingScale(startPoints: TouchList, nowPoints: TouchList) {
+        let distanceX1 = startPoints[0].pageX - startPoints[1].pageX;
+        let distanceY1 = startPoints[0].pageY - startPoints[1].pageY;
+        let distanceX2 = nowPoints[0].pageX - nowPoints[1].pageY;
+        let distanceY2 = nowPoints[0].pageY - nowPoints[1].pageY;
+        return Math.sqrt(((distanceY2 * distanceY2) + (distanceX2 * distanceX2)) / ((distanceY1 * distanceY1) + (distanceX1 * distanceX1)));
+    }
+
+
+    showScaleImg(scale) {
+        this.matrix.scale = scale;
+        this.showTransformImg();
+    }
+
+    showPositionImg(x, y) {
+        this.matrix.X = x;
+        this.matrix.Y = y;
+        this.showTransformImg();
+    }
+
+    showTransformImg() {
+        this.imageShowCell.style.transform = `matrix(${this.getMatrixStr()})`;
+    }
+
+    getMatrixStr () {
+        return [this.matrix.scale, 0, 0, this.matrix.scale, this.matrix.X, this.matrix.Y].toString();
     }
 }
