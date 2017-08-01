@@ -1,0 +1,19 @@
+{
+  "name": "image_viewer",
+  "version": "1.0.0",
+  "description": "- A simple image viewer with javascript on HTML5",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhongqc/imageViewer.git"
+  },
+  "author": "zhongqc",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/zhongqc/imageViewer/issues"
+  },
+  "homepage": "https://github.com/zhongqc/imageViewer#readme"
+}
