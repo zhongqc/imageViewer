@@ -1,4 +1,4 @@
-﻿function imgViewer(params) {
+function imgViewer(params) {
     this.imgsArr = params.imgsArr;
     this.showIndex = params.showIndex || 0;
     this.minScale = params.minScale || 1;

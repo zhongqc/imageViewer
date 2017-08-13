@@ -20,6 +20,9 @@ class imageViewer {
         this.showImages();
     }
 
+    /**
+     * 创建img列表，并直接加载到dom中，存在问题，加载到dom中时就开始加载img内容，影响当前图片加载速度
+     */
     showImages() {
         let imageViewerContent = document.createElement("div");
         imageViewerContent.id = "imageViewer";
@@ -30,6 +33,11 @@ class imageViewer {
         this.showIndexImage();
     }
 
+    /**
+     * 获取每个图片元素
+     * @param {number} i
+     * @returns {'<div class="imgCell"><img src="this.images[i]"></div>'}
+     */
     getImageCell(i: number) {
         let imgCell = document.createElement("div");
         imgCell.className = "imgCell";
@@ -39,6 +47,9 @@ class imageViewer {
         return imgCell;
     }
 
+    /**
+     * 根据this.showIndex显示图片
+     */
     showIndexImage() {
         this.showIndex = this.showIndex % this.images.length;
         //上次显示的cell
